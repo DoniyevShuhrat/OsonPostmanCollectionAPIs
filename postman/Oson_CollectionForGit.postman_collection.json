@@ -1,0 +1,961 @@
+{
+	"info": {
+		"_postman_id": "a3a7042e-5044-4e56-bba5-653754a733c8",
+		"name": "Oson_CollectionForGit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14289685",
+		"_collection_link": "https://orange-equinox-950167.postman.co/workspace/OsonAPITesting~ec34bde8-0898-4855-a5a7-d7c58c075aa5/collection/14289685-a3a7042e-5044-4e56-bba5-653754a733c8?action=share&source=collection_link&creator=14289685"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var responseCode = pm.response.code;",
+									"",
+									"    if(responseCode === 200 || responseCode === 201){",
+									"        console.log(\"token: \", pm.response.json().token);",
+									"        pm.environment.set(\"token\", pm.response.json().token);",
+									"        console.log(\"Expected status code:\", responseCode);",
+									"    } else {",
+									"        console.log(\"token: \", \"\");",
+									"        pm.environment.set(\"token\", \"\");",
+									"        console.log(\"Unexpected status code:\", responseCode);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"",
+									"        // Fail the test if the status code is 404 or 500",
+									"        pm.expect(responseCode).to.not.be.oneOf([404, 500]);",
+									"    }",
+									"",
+									"    // Assert that the status code must be either 200 or 201",
+									"    pm.expect(responseCode).to.be.oneOf([200, 201]);",
+									"});",
+									"console.log(\"Environment Variables:\");",
+									"console.log(\"Base URL: \", pm.environment.get(\"baseUrl\"));",
+									"console.log(\"Token: \", pm.environment.get(\"token\"));",
+									"",
+									"/*",
+									"pm.test(\"Status code is not 404 or 500\", function () {",
+									"    if (pm.response.code === 404 && pm.response.code === 500) {",
+									"        console.log(\"token: \", \"\");",
+									"        pm.environment.set(\"token\", \"\");",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"    //pm.expect(pm.response.code).not.to.eql(404);",
+									"    pm.expect(pm.response.code).not.to.be.eql([404, 500]);",
+									"});",
+									"*/"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "phone",
+									"value": "{{phone_number}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "dev_id",
+									"value": "{{dev_id}}",
+									"type": "text"
+								},
+								{
+									"key": "device_name",
+									"value": "{{platform}}",
+									"type": "text"
+								},
+								{
+									"key": "app_version",
+									"value": "{{app_version}}",
+									"type": "text"
+								},
+								{
+									"key": "platform",
+									"value": "{{platform}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{url}}/user/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User QR Image",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": "{{url}}/user/qr"
+					},
+					"response": []
+				},
+				{
+					"name": "Set avatar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200){",
+									"        //console.log(response.token);",
+									"        //pm.environment.set(\"token\",response.token);   ",
+									"    }",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"value": "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FJQAlJSmkoAKq3EAlQjvVqigDlnUoSp6imVq39sP9avWsqgApDS0hoAKSil4oAbRS0lACUUUUAJRS0lABRRSUAFFFFABS0lFABRRSUALRSUUALRSUUALRRRQAUUUUAFFJRQAtFFFABRSUUALRSUtABS0lFAC0UUUAFFFFABRRRQB/9WGlptFADs0UlFADqKSloAKO9JRQAUoHekpaAClopKAFp1NBpc0AHakpaKACjrRRQAtHaio3YKCTQBVuJio2qeTWfinOxdtxpVFAABVqFeahUc1diX5gaANO3U8ZrUUcVSt14rQUcUAOpaKKACloooAKKKMigBaKTIpNwoAdSUm4etLkUAFFGaKAEpKdSUAJRS0lABSUtJQA0ikp9NoAbimkVJSUAR0U4im0AMdQ6lT3rmbiLyJivY9K6k1l6hCHj3Y5FAGPTTQh4p1ADaKWkoASkNKaSgAopKKACkpaSgAooooASiiigBKKKKACiiigAooooAKKSloAKKSjNAC0UlFAC0UlFAC0UUUAFFFFAC0UUUAFFFFABS0lFAC0UlFAC0UlFAH/9aCijOKMigAopKWgBaM0UlAC0tJRQAtFJxRQA7NFJS0AApaTNFADqKSlzQAuKSlpKADNZtxNuOxfxq9IcKTWP1OaACplGBTFHNSHigByitG2TLVnp1res4cDNAF6JMAVZFIBgU6gAopM0maAHE4qBpgKceetV5EU+lADjPUDXm3t+tQSJjpWe+c8igDSa+IPTP0qFr8dqyWyOlR80AbAug33TVhLtgMZz9awlJqwjGgDeS4DCrKyA1hxMauo5GKANMHNLUKNkVIKAHUlFJmgAozTSaYWxQBJmkLCqzTAVUe5564oA080ZrEa+PY05L09+aANeiqsdwr8dDU4NADqilUMhFSUh5oA5KUeVKVp3XmrOoxbX3DvVONsjBoAfSU6koAbSU7FJQA2kp1IaAEpKWkoAKKKKAEooooAKSlooASiikoAWkoooAKSlooAKKKKACiiigAooooAWiiigApaSigBaKSloAKKKSgBaKKKACiiloASlpKKAP/169FNooAcKWm9qXNAC0GkzRQAClpM0ZoAdRTc0tAC5pO9FFADqKSigB1AptKDQA6ikppOBQBVun4CjvVNadKxZ+e1NFADwKQmnjgVHnJoAu2ib5AK6qJAigVjaXD/GRW9QAt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fQ1dQnHNV70boDQBhx/eFa2PSsqIZYVrgUAMxTSKlxTSDQBHimYqXFNxQBFimkVKRTSKAIiKaRUpFMxQAym1Jim0AMpKdikoAbSU7FJigBuKTFOpKAEpKWigBKKDRQAlFLSUAFFFFABSUtJQAUUUUAFLSUUALRRRQAtFJS0AFFFFAC0UlFAH/9THpQaZS0APoptLQA6im0ooAWlptLQAtGaSigBaKbS0AOpabS0ALRmkzRQAu0vwKZt2GtOziDKWNUZ1PmEUAIWDLgVXIwcVdjt3xnFVJQQ5BoAuaeMziuqXpXKaf/rxXVKeKAJBS00U6gApaSloAKKKKACiiigApKWigBKSlppNAC5pM0wmkBoAlpSQKbnFZl9dGNCF60AWpr2GH7zAVSGrWzHG6uYlZ3Ys9EMLzNtQUAdokoddwORTXlArMtbae378elMnkIbFAGiZhURmrM8w461BLeBPlXk0AbiTh/lNPAwawILslueK342DqDQBJilxSiloAbikxUlGKAI8VGyA1PRigCqBg0ycboyKssKgboQaAMK3X95j8K1MVnQrtnI9DWnQAykpxpDQAwimkVJikIoAiIppFSkUwigCIimkVKabigCIimkVLim4oAjphFSEUmKAGYptPxTcUANpKdSUANNFLSUAJSU6koASilpKAEopaSgAooooASiiigAooooAKWiigAooooAKKKWgApaSloA//9XGpaZvwM4o8xT14oAdS00Mp706gApaSigB1FJRmgBaDSUtABRSUtAC0tNpaAFopKWgDbsgfs5NV0h82fnpV60XFrUlpF8xYjmgCz5KBcYrm9Th2S71HBrqmIUZNYN/Osg8sDigDMs22yiutQ5WuQiBSQGuqgbcgNAFoU6oxTxQAtLSUUALRSUtABRSUtABRRSUAJTWp1NNAEXTinAUuKdigBp5GKy5ofMbmtfFQvArHPSgCgljbMPnGatx29vCP3agVKIgvenbQKAIipxxWNdxtvJNb2Ris+5Ct0oAxWGV2jrWc0Tq3IrVcc8UwuOjUAZ8YwRXQWz4j5rLVAWyKuK2BgUAbCHIqbFUIXyKuryKAFoxSgUtADDSU80ygBrVA4qxUTigDEU4uWq9WcTtvDWhmgBaSiigANNp1JQA2mkU+koAiIpMVIRTcUAREU01KRTcUARYppFTEUwigCLFNIqQikIoAixS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U1IfegBoORTs0zaRytNDHoaALAp4PrUI5p9AE4qQDNQqanFAC4Aphz0qTrRj1oAh20YFPI4phFADSKmjmZBgVCaKANFJlf2NSfWssVZScrweaAJnVWqq8QPNXAyP93rSFGFAGW0XoKhMZrUKiomQUAZmylEdXCnpQEoAriKphEKmC1KqigCERiplQVIFGKeBQA0LT8U4KadigBuKafSnmoZDtUt6CgDBuG3zM3vUFKTk5ooASilpKACiiigAooooAKKKKACnKzIwZTgjoabRQBoz6jLKgQcHGCazqKKACikooAWikooAWikooAWiijrQAUtJS0ALRRRQAUUUUAFFFFACUUtFACUUtFABTw3rTKKAJ6WolbFS0AFLSUtABTlPNNpRQBOKicVIppWGaAKTjnNMqZhnioaAP//SQimg4PWnZ4qIkUAS5HWjIqvuHQUobPSgCQoD0qBkI5qbd2pd3rQBWNNqwUB6VGVxQBGaKDSUABHpTcU+k+tADMUmKfjvSEUAMxTafikoAbS0UUAFFFJQAtNIDDmlpaAIxletTqQRio8A0gypyOaALaj0qUVEjAipRnNAEgHeigelIaAExnrTaU00n0oATHOabT6CKAGYozinGoHkWPk0AWA2OlW47gdJPzrEN038IpBdv0IoA6TbG4yKjaEdjWPFflDnFbUUyTpvQ0AVmiI6VHsb0q+RTNtAFQKakC1NilxQAwCngU7FOAoASinU1qAIyarXJIhYj0qwaqXjBYcepoAwsEdaKth+x5pTFG/TigCnSVI8bJ16etMoASiiigAooooAKKKKACiiigAoNFLQA2ilNJQAUUUUAFFFLQAlLSUUALRQPSigBaWkpaACilooAKKKKACiiigAooooAKKKWgBKerdjTaKAJqWkUgrjuKWgApRRRQBIpqXqKriplNAEbrVZxg5q+y5FVmGKAP/TjLDFRH3p2M9aY2O1ADCaVabzningcUAPHWnfWkHSl5xmgBc0hOetKetJQAhQEcVCVIqxSHnrQBW7U2rBTjio2XHagCOijHpSUALTSKdg0uPWgCPFNqTFJigBlJTytNIoAbRmlxSGgBaWmUZoAkB2mraOCBVDJpyvsbIoA0qaaiWVX4Bp26gBTSUv1puaAHZpM96YWC8k9KozTl+F4FAE01yB8sf4mqBJY5NFFABRRRg0AFTQzyQPvQ1F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",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{url}}/user/avatar"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200){",
+									"        //console.log(response.token);",
+									"        //pm.environment.set(\"token\",response.token);   ",
+									"    }",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": "{{url}}/user/info"
+					},
+					"response": []
+				},
+				{
+					"name": "Get balance",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/balance?total=1&primary=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"balance"
+							],
+							"query": [
+								{
+									"key": "total",
+									"value": "1"
+								},
+								{
+									"key": "primary",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user avatar by phone",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/icon?phone=998998043512",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"icon"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "998998043512"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set User Info",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Ahmadjon",
+									"type": "text"
+								},
+								{
+									"key": "sex",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "registration",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ahmad@m.ru",
+									"type": "text"
+								},
+								{
+									"key": "notify",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "lang",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{url}}/user/info"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"        //pm.expect(pm.response.code).not.to.eql(404);",
+									"        pm.expect(pm.response.code).not.to.be.oneOf([404, 500]);",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/data_v2?version=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"data_v2"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pasport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"        pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"        //pm.expect(pm.response.code).not.to.eql(404);",
+									"        pm.expect(pm.response.code).not.to.be.oneOf([404, 500]);",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});",
+									"/*",
+									"pm.test(\"Status code is not 404 or 500\", function () {",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"    //pm.expect(pm.response.code).not.to.eql(404);",
+									"    pm.expect(pm.response.code).not.to.be.oneOf([404, 500]);",
+									"});",
+									"*/"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{url}}/user/full_auth_info"
+					},
+					"response": []
+				},
+				{
+					"name": "Set Passport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"        //pm.expect(pm.response.code).not.to.eql(404);",
+									"        pm.expect(pm.response.code).not.to.be.oneOf([404, 500]);",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "fio",
+									"value": "Ahmadjon Mullamuhamedov",
+									"type": "text"
+								},
+								{
+									"key": "date_of_birth",
+									"value": "21-05-1994",
+									"type": "text"
+								},
+								{
+									"key": "nationality",
+									"value": "O`zbek",
+									"type": "text"
+								},
+								{
+									"key": "citizenship",
+									"value": "O`zbek",
+									"type": "text"
+								},
+								{
+									"key": "passport_serial",
+									"value": "AB",
+									"type": "text"
+								},
+								{
+									"key": "passport_number",
+									"value": "123213",
+									"type": "text"
+								},
+								{
+									"key": "passport_start_date",
+									"value": "21-05-2015",
+									"type": "text"
+								},
+								{
+									"key": "passport_end_date",
+									"value": "21-05-2025",
+									"type": "text"
+								},
+								{
+									"key": "passport_image",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{url}}/user/full_auth_info"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "phone",
+									"value": "[\"+998998043512\", \"+998974498333\"]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "[\"+998901208485\",\"+998971001231\",\"+998977020430\",\"+998903311919\",\"+998943201288\",\"+998996637055\",\"+998946518781\",\"+998936893236\",\"+998909429271\",\"+998889008665\",\"+998946569939\",\"+998945477746\",\"+998909386253\",\"+998943222499\",\"+998931386767\",\"+998943188884\",\"+998945492925\",\"+998939686959\",\"+998936580657\",\"+998933961063\",\"+998936877090\",\"+998946336421\",\"+998903244214\",\"+998998280050\",\"+998934560508\",\"+998909307333\",\"+998911919777\",\"+998934780708\",\"+998909319652\",\"+998974498333\"]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "[\"+998909319652\",\"+998974498333\",\"+998981170408\",\"+998981266591\",\"+998977422808\",\"+998977682310\",\"+998933909993\",\"+998998646566\",\"+998934776838\",\"+998977156840\",\"+998990771442\",\"+998936896909\",\"+998909971229\",\"+998936219687\",\"+998903464425\",\"+998977732381\",\"+998911649335\",\"+998933999959\",\"+998977722441\",\"+998977020430\",\"+998945444838\",\"+998934590242\",\"+998936260313\",\"+998990306743\",\"+998935970996\",\"+998990857799\",\"+998903575786\",\"+998943663344\",\"+998934597141\",\"+998977704941\",\"+998909938414\",\"+998998693999\",\"+998971001245\",\"+998903266644\",\"+998995611096\",\"+998998037944\",\"+998334575545\",\"+998981171766\",\"+998331999100\",\"+998941988432\",\"+998930050366\",\"+998935813830\",\"+998946452225\",\"+998936580657\",\"+998712693821\",\"+998998692122\",\"+998932007743\",\"+998977121299\",\"+998936541792\",\"+998943923388\",\"+998977753588\",\"+998946301230\",\"+998935669616\",\"+998934104204\",\"+998935812471\",\"+998883336421\",\"+998931810602\",\"+998936867046\",\"+998946142892\",\"+998903587006\",\"+998945492925\",\"+998977824806\",\"+998901102861\",\"+998971030142\",\"+998997944171\",\"+998946625092\",\"+998995773236\",\"+998945423102\",\"+998933790002\",\"+998912274149\",\"+998911903192\",\"+998996548604\",\"+998933961063\",\"+998977303940\",\"+998998220063\",\"+998909963940\",\"+998946909466\",\"+998946080291\",\"+998998647577\",\"+998909847065\",\"+998903156455\",\"+998934560508\",\"+998930786850\",\"+998998049981\",\"+998903180764\",\"+998946426409\",\"+998909489814\",\"+998909340004\",\"+998903176363\",\"+998991019009\",\"+998933983866\",\"+998998143512\",\"+998900060642\",\"+998977152281\",\"+998903575977\",\"+998903244214\",\"+998946546164\",\"+998935909212\",\"+998908750202\",\"+998946854485\",\"+998971001224\",\"+998935331477\",\"+998909013802\",\"+998712480191\",\"+998903311919\",\"+998935774726\",\"+998949865151\",\"+998941274961\",\"+998977309778\",\"+998977301442\",\"+998934340558\",\"+998998196418\",\"+998909985799\",\"+998998285002\",\"+998936893236\",\"+998946808878\",\"+998933765928\",\"+998933924068\",\"+998995068186\",\"+998998805442\",\"+998935959194\",\"+998909180263\",\"+998712900316\",\"+998998493319\",\"+998946999595\",\"+998990395269\",\"+998943433388\",\"+998939680857\",\"+998941276788\",\"+998934711654\",\"+998930815652\",\"+998932973413\",\"+998998570136\",\"+998331999100\",\"+998910147084\",\"+998903556503\",\"+998935461817\",\"+998972496030\",\"+998974241776\",\"+998936825292\",\"+998712429094\",\"+998993871727\",\"+998971001228\",\"+998943188882\",\"+998909386253\",\"+998901883864\",\"+989153307919\",\"+998943188882\",\"+998974707781\",\"+998936576082\",\"+998939130008\",\"+998998043512\",\"+998977070846\",\"+998977012758\",\"+998916971112\",\"+998946592482\",\"+998942469339\",\"+998974401767\",\"+998946505151\",\"+998980006164\",\"+998652237412\",\"+998935331477\",\"+998998143698\",\"+998946527470\",\"+998998166776\",\"+998935147916\",\"+998951940808\",\"+998945477746\",\"+998909984594\",\"+998998043512\",\"+998998980388\",\"+998936540669\",\"+998941856609\",\"+998971311492\",\"+998712917192\",\"+998909429271\",\"+998944173582\",\"+998903914198\",\"+998998242066\",\"+998934527094\",\"+998909173838\",\"+998971346699\",\"+998974233554\",\"+998977722221\",\"+998971001237\",\"+998909313285\",\"+998911521976\",\"+998998706481\",\"+998977764090\",\"+998901744449\",\"+998934790715\",\"+998977200894\",\"+998943208393\",\"+998903456766\",\"+998977309778\",\"+998932480841\",\"+998911344230\",\"+998998172372\",\"+998935611330\",\"+998935282925\",\"+998998493319\",\"+(555)7664823\",\"+(707)5551854\",\"+998903595330\",\"+998936558522\",\"+998973011080\",\"+998945278481\",\"+998946592936\",\"+998944040270\",\"+998977079973\",\"+998935569619\",\"+998909932262\",\"+998990041020\",\"+998998229987\",\"+998971101203\",\"+998909961975\",\"+998993515199\",\"+998933970026\",\"+998946856888\",\"+998945441440\",\"+998942220225\",\"+998936542822\",\"+998911349846\",\"+998936877090\",\"+998934104204\",\"+998942472502\",\"+998934584142\",\"+998337441144\",\"+998919912828\",\"+998998723727\",\"+998903450292\",\"+998977706134\",\"+998946279732\",\"+998936826070\",\"+998946823149\",\"+998977704914\",\"+998942931413\",\"+998977456785\",\"+998974414995\",\"+998943264595\",\"+998712944758\",\"+998933787176\",\"+998945494202\",\"+998977752133\",\"+998936818186\",\"+998939678373\",\"+998931861469\",\"+998941260637\",\"+998939670057\",\"+998943280715\",\"+998971001231\",\"+998935743324\",\"+998998865252\",\"+998951703652\",\"+998933119090\",\"+998943222499\",\"+998945477746\",\"+998933775657\",\"+998998749273\",\"+998914400903\",\"+998946132363\",\"+998914470007\",\"+998911333016\",\"+998946815402\",\"+998974036688\",\"+998909520501\",\"+998944070226\",\"+998994031444\",\"+998998236007\",\"+998652231573\",\"+998998865252\",\"+998998555252\",\"+998943188884\",\"+998945492925\",\"+998974025288\",\"+998936667788\",\"+998931840502\",\"+998935437333\",\"+998999889818\",\"+998903704170\",\"+998998978707\",\"+998939615204\",\"+998973034565\",\"+998997055500\",\"+998937557543\",\"+998999296446\",\"+390833505037\",\"+998936547161\",\"+998936524380\",\"+998946406468\",\"+998914807300\",\"+998946452225\",\"+998998043512\",\"+998903372278\",\"+998934730038\",\"+998997010090\",\"+989943280715\",\"+998934741005\",\"+998930815652\",\"+998946445598\",\"+998942465404\",\"+998909929100\",\"+998997055011\",\"+998997231520\",\"+998933921051\",\"+998909386253\",\"+998903725224\",\"+998935967722\",\"+998998805960\",\"+998946656452\",\"+998977711146\",\"+998933026208\",\"+998981249008\",\"+998981178970\",\"+998903460405\",\"+998946215564\",\"+998936815560\",\"+998712007797\",\"+998931429747\",\"+998935550900\",\"+998909830858\",\"+998909052225\",\"+998977332585\",\"+998938656556\",\"+998881871441\",\"+998974457784\",\"+998935291754\",\"+998911919777\",\"+998983629699\",\"+998941228916\",\"+998901208485\",\"+998937030657\",\"+998998387375\",\"+998935331477\",\"+998932910444\",\"+998993659963\",\"+998337697679\",\"+998936657781\",\"+998903725224\",\"+998935517035\",\"+998904432272\",\"+998936524380\",\"+998933927010\",\"+998932011122\",\"+998906171873\",\"+998906171873\",\"+998977919193\",\"+998909992782\",\"+998933929292\",\"+998902652427\",\"+998946344341\",\"+998712653512\",\"+998932351500\",\"+998887884747\",\"+998935079277\",\"+998944558522\",\"+998935600588\",\"+998998412102\",\"+998946777701\",\"+380666650591\",\"+998946413000\",\"+998931801060\",\"+998946873419\",\"+998977455245\",\"+998971336133\",\"+998982610997\",\"+998974253505\",\"+998977364086\",\"+998974883800\",\"+998971330408\",\"+998936241955\",\"+998998327413\",\"+998909199219\",\"+998941111127\",\"+998936206726\",\"+998933940170\",\"+998935564245\",\"+998935760209\",\"+998900113321\",\"+998945392444\",\"+998977444084\",\"+998971301442\",\"+998977281218\",\"+998998744207\",\"+998909174231\",\"+998998850666\",\"+998990359939\",\"+998941287076\",\"+998770053004\",\"+998909167530\",\"+998943433388\",\"+998934512426\",\"+998935826293\",\"+998941858880\",\"+998936881786\",\"+998936216962\",\"+998943260637\",\"+998935636050\",\"+998974289889\",\"+998946436800\",\"+998951771332\",\"+998903214484\",\"+998936210073\",\"+998971101219\",\"+998977717339\",\"+998935608370\",\"+998900332017\",\"+998936619758\",\"+998977709430\",\"+998914496761\",\"+998998194495\",\"+998945446454\",\"+998974552363\",\"+998712976430\",\"+998974115377\",\"+998997956621\",\"+998936864886\",\"+998998621539\",\"+998998154438\",\"+998944178357\",\"+998997098416\",\"+998971101219\",\"+998946354995\",\"+998936203132\",\"+998998980511\",\"+998901878866\",\"+998914022600\",\"+998977605570\",\"+998900028855\",\"+998946196909\",\"+998998383413\",\"+998998818008\",\"+998936567566\",\"+998946360037\",\"+998998477472\",\"+998888308300\",\"+998990552464\",\"+998946336421\",\"+998974873333\",\"+998998294138\",\"+998946518781\",\"+998998965442\",\"+998998965442\",\"+998943221004\",\"+998977138633\",\"+998970001977\",\"+998909720816\",\"+998933056203\",\"+998996637055\",\"+998900994214\",\"+998909663830\",\"+998909079633\",\"+998911339397\",\"+998909449075\",\"+998998711994\",\"+998934557543\",\"+998935846095\",\"+998911917881\",\"+998909971229\",\"+998914023158\",\"+998946773158\",\"+998998630777\",\"+998909720816\",\"+998911638242\",\"+998971330408\",\"+998934522287\",\"+998916451675\",\"+998945423103\",\"+998936837791\",\"+(408)5555270\",\"+(408)5553514\",\"+998942200077\",\"+998997013514\",\"+998936556760\",\"+998998865252\",\"+998977634103\",\"+998936860743\",\"+998935510033\",\"+998909610333\",\"+998998297703\",\"+998909847885\",\"+998909506276\",\"+998909291909\",\"+998946137900\",\"+998900810044\",\"+998936252454\",\"+998930050366\",\"+998946080291\",\"+998973423366\",\"+998935305063\",\"+998977711188\",\"+998934710804\",\"+998909344232\",\"+998935305063\",\"+998936657781\",\"+998998154438\",\"+998997055500\",\"+998946505151\",\"+998998493319\",\"+998998865252\",\"+998974149771\",\"+998977436693\",\"+998936252454\",\"+998930050366\",\"+998998043512\",\"+998990041020\",\"+998970007420\",\"+998909720816\",\"+998998980388\",\"+998946344341\",\"+998946080291\",\"+998943260637\",\"+998971001257\",\"+998337377113\",\"+998901208485\",\"+998971001231\",\"+998977020430\",\"+998903311919\",\"+998943201288\",\"+998996637055\",\"+998946518781\",\"+998936893236\",\"+998909429271\",\"+998889008665\",\"+998946569939\",\"+998945477746\",\"+998909386253\",\"+998943222499\",\"+998931386767\",\"+998943188884\",\"+998945492925\",\"+998939686959\",\"+998936580657\",\"+998933961063\",\"+998936877090\",\"+998946336421\",\"+998903244214\",\"+998998280050\",\"+998934560508\",\"+998909307333\",\"+998911919777\",\"+998934780708\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{url}}/user/contacts_v2"
+					},
+					"response": []
+				},
+				{
+					"name": "All data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "region_id",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{url}}user/start_data"
+					},
+					"response": []
+				},
+				{
+					"name": "wallet balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{url}}/wallet/balance"
+					},
+					"response": []
+				},
+				{
+					"name": "get jivo token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{url}}/user/jivo_token"
+					},
+					"response": []
+				},
+				{
+					"name": "get user image",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    ",
+									"    //pm.test(\"Response is a JPEG image\", function () {",
+									"        //pm.response.to.have.header(\"Content-Type\", \"image/jpeg\");",
+									"    //});",
+									"    if(pm.response.code === 200 || pm.response.code === 201){",
+									"        if(pm.response.to.have.header(\"content-type\", \"image/png\")){",
+									"            console.log(\"response: \", \"file type is PNG\");",
+									"        }",
+									"        else{",
+									"            console.log(\"response: \", \"file type is not PNG\");",
+									"        }",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://core.oson.uz:4080/geticon/32363535385f38633536376539633137653361383938333934616162626461393635336563363633356235616438.png"
+					},
+					"response": []
+				},
+				{
+					"name": "set user language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"// Get the environment variable",
+									"    var token = pm.environment.get(\"token\");",
+									"",
+									"    // Check if the variable is not empty or undefined",
+									"    //pm.expect(token).to.not.be.undefined; // Method-1",
+									"    //pm.expect(token).to.not.be.null; // Method-2",
+									"    //pm.expect(token).to.not.equal(\"\"); // Method-3",
+									"if(pm.expect(token).to.not.equal(\"\")){",
+									"    pm.test(\"Status code is 200 or 201\", function () {",
+									"        var response = pm.response.json();",
+									"        var responseCode = pm.response.code;",
+									"        console.log(responseCode);",
+									"        if(responseCode === 200 || pm.response.code === 201){",
+									"            console.log(\"errstr: \", response.errstr);",
+									"            //pm.environment.set(\"token\",response.token);",
+									"            console.log(\"Expected status code:\", pm.response.code);",
+									"        }",
+									"        if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"            console.log(\"errstr: \", response.errstr);",
+									"            console.log(\"Unexpected status code:\", pm.response.code);",
+									"            console.log(\"Response body:\", pm.response.text());",
+									"        }",
+									"",
+									"        //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"        //pm.response.to.have.status(200);",
+									"    });",
+									"}",
+									"else{",
+									"    console.log(\"token was empty\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lang",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{url}}user/lang"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();",
+									"",
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    var response = pm.response.json();",
+									"    var responseCode = pm.response.code;",
+									"    console.log(responseCode);",
+									"    if(responseCode === 200 || pm.response.code === 201){",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        //pm.environment.set(\"token\",response.token);",
+									"        console.log(\"Expected status code:\", pm.response.code);",
+									"    }",
+									"    if (pm.response.code !== 200 && pm.response.code !== 201) {",
+									"        console.log(\"errstr: \", response.errstr);",
+									"        console.log(\"Unexpected status code:\", pm.response.code);",
+									"        console.log(\"Response body:\", pm.response.text());",
+									"    }",
+									"",
+									"    //pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    //pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{url}}/user/logout"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
