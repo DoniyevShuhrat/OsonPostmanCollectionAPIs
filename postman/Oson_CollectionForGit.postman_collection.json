@@ -18,6 +18,13 @@
 							"script": {
 								"exec": [
 									"console.clear();",
+									"pm.test(\"Log Request and Response\", function () {",
+									"    console.log(\"Request Body:\", pm.request.body); ",
+									"    console.log(\"Request Headers:\", pm.request.headers); ",
+									"    console.log(\"Response Body:\", pm.response.text()); ",
+									"    console.log(\"Response Headers:\", pm.response.headers); ",
+									"    console.log(\"Response Status Code:\", pm.response.code);",
+									"});",
 									"",
 									"pm.test(\"Status code is 200 or 201\", function () {",
 									"    var responseCode = pm.response.code;",
